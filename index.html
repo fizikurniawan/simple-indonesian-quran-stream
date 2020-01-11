@@ -1,0 +1,99 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css">
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Quran Player</title>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Quran Player</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="http://fizi.dev">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://blog.fizi.dev">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://cv.fizi.dev">Portfolio</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Social Media
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="https://facebook.com/fizikurniawan">Facebook</a>
+              <a class="dropdown-item" href="https://www.linkedin.com/in/fizikurniawan/">LinkedIn</a>
+              <a class="dropdown-item" href="https://github.com/fizikurniawan">Github</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <section class="main-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Indonesian Quran Player</h1>
+          <div class="row align-items-center justify-content-between form-group mx-auto">
+            <select name="surah" id="surah" class="form-control">
+              <option value="-">Pilih Surah</option>
+            </select>
+            <button class="btn-primary btn">Pilih</button>
+          </div>
+          <div id="audio"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="text-center">
+    <p class="mx-auto">Thanks to <a href="https://github.com/bachors/Al-Quran-ID-API">bachors</a></p>
+  </footer>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
+<script>
+  const url = 'https://al-quran-8d642.firebaseio.com/data.json?print=pretty'
+  $.get(url, function (data) {
+    data.forEach(element => {
+      $('#surah').append(`<option value="${element.audio}">${element.nama} - ${element.asma} (${element.ayat})</option>`)
+    });
+  })
+
+  $('.btn').click(function () {
+    const url = $('#surah').val()
+    $('#audio').html(`
+      <audio controls>
+        <source src="${url}" type="audio/mpeg">
+      </audio>
+    `)
+  })
+
+  $('#surah').select2()
+</script>
+
+</html>
